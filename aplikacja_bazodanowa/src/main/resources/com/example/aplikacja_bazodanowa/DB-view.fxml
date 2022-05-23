@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.aplikacja_bazodanowa.DBController">
+   <children>
+      <Button fx:id="addButton" layoutX="74.0" layoutY="347.0" mnemonicParsing="false" onAction="#onAddButtonClick" text="Dodaj wpis" />
+      <Button fx:id="deleteButton" layoutX="196.0" layoutY="347.0" mnemonicParsing="false" onAction="#onDeleteButtonClick" text="Usuń wpis" />
+      <TableView fx:id="BOOKS" layoutX="345.0" layoutY="77.0" prefHeight="255.0" prefWidth="450.0">
+        <columns>
+          <TableColumn fx:id="colTitle" onEditCommit="#changeTitleCellEvent" prefWidth="75.0" text="Tytuł" />
+          <TableColumn fx:id="colName" onEditCommit="#changeNameCellEvent" prefWidth="75.0" text="Imię autora" />
+            <TableColumn fx:id="colSurname" onEditCommit="#changeSurnameCellEvent" prefWidth="75.0" text="Nazwisko autora" />
+            <TableColumn fx:id="colYear" onEditCommit="#changeYearCellEvent" prefWidth="75.0" text="Rok wydania" />
+            <TableColumn fx:id="colPublisher" onEditCommit="#changePublisherCellEvent" prefWidth="75.0" text="Wydawnictwo" />
+            <TableColumn fx:id="colDescription" onEditCommit="#changeDescriptionCellEvent" prefWidth="75.0" text="Opis" />
+        </columns>
+      </TableView>
+      <TextField fx:id="txtTitle" layoutX="29.0" layoutY="62.0" prefHeight="25.0" prefWidth="300.0" />
+      <Label layoutX="36.0" layoutY="37.0" text="Tytuł książki" />
+      <Label layoutX="187.0" layoutY="91.0" text="Nazwisko autora" />
+      <Label layoutX="51.0" layoutY="91.0" text="Imię autora" />
+      <Label layoutX="46.0" layoutY="147.0" text="Rok wydania" />
+      <Label layoutX="194.0" layoutY="147.0" text="Wydawnictwo" />
+      <Label layoutX="59.0" layoutY="201.0" text="Opis" />
+      <TextField fx:id="txtAuthorName" layoutX="26.0" layoutY="113.0" />
+      <TextField fx:id="txtDescription" layoutX="24.0" layoutY="222.0" prefHeight="110.0" prefWidth="300.0" />
+      <TextField fx:id="txtPublisher" layoutX="181.0" layoutY="168.0" />
+      <TextField fx:id="txtPublicationYear" layoutX="26.0" layoutY="168.0" />
+      <TextField fx:id="txtAuthorSurname" layoutX="181.0" layoutY="113.0" />
+      <Label layoutX="529.0" layoutY="28.0" text="Książki">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtFilter" layoutX="397.0" layoutY="347.0" prefHeight="25.0" prefWidth="263.0" />
+      <Button fx:id="filterButton" layoutX="677.0" layoutY="347.0" mnemonicParsing="false" onAction="#onFilterButtonClick" text="Filtruj" />
+      <Button fx:id="stopButton" layoutX="731.0" layoutY="347.0" mnemonicParsing="false" onAction="#onStopButtonClick" text="Wróć" />
+   </children>
+</AnchorPane>
