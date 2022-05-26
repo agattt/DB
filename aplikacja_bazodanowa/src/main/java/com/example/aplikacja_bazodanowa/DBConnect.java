@@ -11,47 +11,64 @@ import javafx.scene.control.*;
 
 public class DBConnect {
 
-    @FXML
-    private TextArea txtDescription;
-    @FXML
-    private TextField txtAuthorName;
-    @FXML
-    private TextField txtAuthorSurname;
-    @FXML
-    private TextField txtTitle;
-    @FXML
-    private TextField txtPublisher;
-    @FXML
-    private TextField txtPublicationYear;
+    private Connection connection;
 
-    @BeforeAll
     public static void prepareDb() {
         try (Connection c = DriverManager.getConnection("jdbc:hsqldb:file:BOOKS", "SA", "")) {
             try (Statement st = c.createStatement()) {
                 st.execute("CREATE TABLE IF NOT EXISTS BOOKS (ID INT IDENTITY, TITLE VARCHAR(50), NAME VARCHAR(20), " +
                         "SURNAME VARCHAR(20),  YEAR VARCHAR(4), PUBLISHER VARCHAR(50), DESCRIPTION VARCHAR (150))");
+
             }
         } catch (Exception e) {
             Assertions.fail(e);
         }
     }
 
-    public static Connection getConnection() throws SQLException {
+    public void setConnection(){
 
-        Connection connection = DriverManager.getConnection("jdbc:hsqldb:file:BOOKS", "SA", "");
+        try {
+
+            this.connection = DriverManager.getConnection("jdbc:hsqldb:file:BOOKS", "SA", "");
+
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
+    private Connection getConnection(){
 
         return connection;
 
     }
 
-    public static void dbDisconnect() throws SQLException {
+    private void testConnection(){
+
         try {
-            if (getConnection() != null && !getConnection().isClosed()) {
-                getConnection().close();
+            if (connection.isClosed() || connection.isValid(1000)){
+
+                setConnection();
             }
-        } catch (Exception e){
-            throw e;
+
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+
         }
+
+    }
+
+    public Connection getValidatedConnection(){
+
+        testConnection();
+
+        return connection;
+
     }
 
 }

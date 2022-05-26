@@ -67,9 +67,10 @@ public class DBController implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle){
 
+
         try {
 
-            Connection con = DBConnect.getConnection();
+            Connection con = DBApplication.dbcon.getValidatedConnection();
 
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM BOOKS");
 
@@ -127,7 +128,7 @@ public class DBController implements Initializable {
 
         bSelected.setTitle(newTitle);
 
-        try (Connection c = DBConnect.getConnection()) {
+        try (Connection c = DBApplication.dbcon.getValidatedConnection()) {
 
             try (PreparedStatement st = c.prepareStatement("UPDATE BOOKS SET TITLE = ? WHERE ID = ?")) {
                 st.setString(1, newTitle);
@@ -149,7 +150,7 @@ public class DBController implements Initializable {
 
         bSelected.setAuthorName(newName);
 
-        try (Connection c = DBConnect.getConnection()) {
+        try (Connection c = DBApplication.dbcon.getValidatedConnection()) {
 
             try (PreparedStatement st = c.prepareStatement("UPDATE BOOKS SET NAME = ? WHERE ID = ?")) {
                 st.setString(1, newName);
@@ -171,7 +172,7 @@ public class DBController implements Initializable {
 
         bSelected.setAuthorSurname(newSurname);
 
-        try (Connection c = DBConnect.getConnection()) {
+        try (Connection c = DBApplication.dbcon.getValidatedConnection()) {
 
             try (PreparedStatement st = c.prepareStatement("UPDATE BOOKS SET SURNAME = ? WHERE ID = ?")) {
                 st.setString(1, newSurname);
@@ -193,7 +194,7 @@ public class DBController implements Initializable {
 
         bSelected.setAuthorSurname(newYear);
 
-        try (Connection c = DBConnect.getConnection()) {
+        try (Connection c = DBApplication.dbcon.getValidatedConnection()) {
 
             try (PreparedStatement st = c.prepareStatement("UPDATE BOOKS SET YEAR = ? WHERE ID = ?")) {
                 st.setString(1, newYear);
@@ -215,7 +216,7 @@ public class DBController implements Initializable {
 
         bSelected.setAuthorSurname(newPublisher);
 
-        try (Connection c = DBConnect.getConnection()) {
+        try (Connection c = DBApplication.dbcon.getValidatedConnection()) {
 
             try (PreparedStatement st = c.prepareStatement("UPDATE BOOKS SET PUBLISHER = ? WHERE ID = ?")) {
                 st.setString(1, newPublisher);
@@ -237,7 +238,7 @@ public class DBController implements Initializable {
 
         bSelected.setAuthorSurname(newDescription);
 
-        try (Connection c = DBConnect.getConnection()) {
+        try (Connection c = DBApplication.dbcon.getValidatedConnection()) {
 
             try (PreparedStatement st = c.prepareStatement("UPDATE BOOKS SET DESCRIPTION = ? WHERE ID = ?")) {
                 st.setString(1, newDescription);
@@ -252,7 +253,7 @@ public class DBController implements Initializable {
     @FXML
     public void onAddButtonClick(ActionEvent event) throws SQLException {
 
-        Connection c = DBConnect.getConnection();
+        Connection c = DBApplication.dbcon.getValidatedConnection();
 
         try (PreparedStatement st = c.prepareStatement("INSERT INTO BOOKS (TITLE, NAME, SURNAME, YEAR, PUBLISHER, DESCRIPTION) VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)){
 
@@ -299,8 +300,9 @@ public class DBController implements Initializable {
 
         int id = BOOKS.getSelectionModel().getSelectedItem().getId();
 
-        try (Connection c = DBConnect.getConnection();
-             Statement st = c.createStatement()) {
+        Connection con = DBApplication.dbcon.getValidatedConnection();
+
+        try (Statement st = con.createStatement()) {
 
             st.execute("DELETE FROM BOOKS WHERE id = " + id);
 
@@ -371,9 +373,9 @@ public class DBController implements Initializable {
 
         ObservableList<Book> dataDB = FXCollections.observableArrayList();
 
-        try {
+        Connection con = DBApplication.dbcon.getValidatedConnection();
 
-            Connection con = DBConnect.getConnection();
+        try {
 
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM BOOKS");
 
